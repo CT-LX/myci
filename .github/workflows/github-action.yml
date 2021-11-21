@@ -17,8 +17,9 @@ jobs:
         run: |
           ls
           npm -v
+          npm i
           npm run build
-          
+
       - name: 同步代码
         uses: burnett01/rsync-deployments@5.1
         with:
