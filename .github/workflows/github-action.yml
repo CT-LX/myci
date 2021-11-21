@@ -4,7 +4,7 @@ on:
     branches: [ main,master ]
 
 env:
-  APP_NAME: myci # 给 APP 起一个名字
+  APP_NAME: dist # 给 APP 起一个名字
 
 jobs:
   build-and-deploy:
@@ -17,7 +17,7 @@ jobs:
         uses: burnett01/rsync-deployments@5.1
         with:
           switches: -avzr --delete
-          path: ./
+          path: dist
           remote_path: /micro-server-code/$APP_NAME/ # 将代码发布到远程主机进行构建,当然你需要自己创建 /micro-server-code 目录 $APP_NAME 是全局的变量
           remote_host: ${{ secrets.Host }}
           remote_port: 22
