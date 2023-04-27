@@ -1,15 +1,18 @@
-name: CI构建
-on:
+name: CI构建 # 定义workflow的名称
+on: # 触发workflow的条件或者事件 每当 push 到 main/master 分支时触发部署
   push:
     branches: [ main,master ]
 
 env:
   APP_NAME: dist # 给 APP 起一个名字
 
+# 任务
 jobs:
   build-and-deploy:
+    # 服务器环境：最新版 Ubuntu
     runs-on: ubuntu-latest
     steps:
+      # 拉取代码
       - name: 检出代码
         uses: actions/checkout@master
 
@@ -44,13 +47,6 @@ jobs:
           script: | # 下面的发布与重启,你可以使用 ansible 与 supervisor 配合进行,如果发布到本地,进行重启,你可以考虑用一下形式
             echo  $APP_NAME
 
-      # - name: 构建结果通知
-      #   uses: zzzze/webhook-trigger@master
-      #   if: always() # 失败成功总会发送
-      #   with:
-      #     data: '{"subject":"${{ env.APP_NAME }} 项目发布结果 ${{ job.status }}","from":"来自 Github CI 集成","body":"集成结果通知","user":["15691425661@qq.com"]}'
-      #     webhook_url: ${{ secrets.WebHookURL }}
-      #     options: '-H "Authorization: ${{ secrets.TOKEN }}" -H "x-request-type: internal"'
 
 
 
